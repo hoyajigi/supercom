@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include"timers.h"
+#include"../lib/timers.h"
 #define N 512
 #define PRINT 1
 
