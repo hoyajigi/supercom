@@ -1,6 +1,6 @@
 /*
  * OpenCL Boilerplate by Hyunseok Cho (i@hoyajigi.com)
- * First created at 2013.10.02
+ * First created at 2013.10.04
  * All Rights Reserved
  */
 
@@ -11,11 +11,10 @@
 #include<strings.h>
 #include<CL/cl.h>
 
-
 #define CHECK_ERROR(err) if (err != CL_SUCCESS) { fprintf(stderr, "[%s:%d] ERROR: %d\n",__FILE__,__LINE__,err);exit(EXIT_FAILURE); }
-
 #define ERROR(err) fprintf(stderr, "[%s:%d] ERROR: %s\n",__FILE__,__LINE__,err);exit(EXIT_FAILURE);
 
+char *get_source_code(const char *filename,size_t *len);
 
 int main()
 {
@@ -68,7 +67,7 @@ int main()
 	free(dev_name);
 
 	// Context
-	context = cl_CreateContext(NULL, 1, &dev, NULL, NULL, &err);
+	context = clCreateContext(NULL, 1, &dev, NULL, NULL, &err);
 	CHECK_ERROR(err);
 
 	// Command queue
@@ -78,12 +77,11 @@ int main()
 	// Create a program
 	char * source_code="";
 	
-	
 	// TODO : Get source code in your favor
 	
 	size_t source_len=strlen(source_code);
 	program = clCreateProgramWithSource(context, 1, (const char **)&source_code, &source_len, &err);
-	CHECK_ERR(err);
+	CHECK_ERROR(err);
 
 	// Build the program.
 	err = clBuildProgram(program, 1, &dev, NULL, NULL, NULL);
@@ -97,35 +95,75 @@ int main()
 				log_size, log, NULL);
 		fprintf(stderr,"\n");
 		fprintf(stderr,"---------- BUILD LOG ----------\n");
-		fprintf(stderr,"%s\n"log);
+		fprintf(stderr,"%s\n",log);
 		fprintf(stderr,"-------------------------------\n");
 		free(log);
 
-		CHECK_ERR(err);
+		CHECK_ERROR(err);
 	}
 	
 	// Kernel
-	kernel = clCreate
-
+	//kernel = clCreateKernel(program,"",&err);
+	CHECK_ERROR(err);
 
 	// Buffers
-	
-
-
+	// TODO: make and buffers
+	/*
+	clCreateBuffer(context, CL_MEM_READ_ONLY|CL_MEM_COPY_HOST_PTR,
+			sizeof(float) * N, A, &err);
+	*/
+	CHECK_ERROR(err);
 
 	// Set the arguments.
 	
 
-
-
 	// Enqueue the kernel.
-	
+	//err=clEnqueueNDRangeKernel(cmd_queue,kernel,1,NULL,gws,lws,0,NULL,NULL);
+	CHECK_ERROR(err);
 
-
-
+	// Read the result.
+	/*
+	err = clEnqueueReadBuffer(cmd_queue,
+			mem_C,
+			CL_TRUE, 0,
+			sizeof(float) * N,
+			C,
+			0, NULL, NULL);
+	*/
+	CHECK_ERROR(err);
 
 	//Release
+	//clReleaseMemObject();
+	clReleaseKernel(kernel);
+	clReleaseProgram(program);
+	clReleaseCommandQueue(cmd_queue);
+	clReleaseContext(context);
+	free(platforms);
 
 	return EXIT_SUCCESS;
 }
 
+char *get_source_code(const char *file_name,size_t *len)
+{
+	FILE *file=fopen(file_name,"r");
+	if(file==NULL){
+		ERROR("Failed to open source code");
+	}
+
+	fseek(file, 0, SEEK_END);
+	size_t length = (size_t)ftell(file);
+	rewind(file);
+	
+	char *source_code=(char *)malloc(length+1);
+	if(fread(source_code,length,1,file)!=1){
+		fclose(file);
+		free(source_code);
+
+		ERROR("Failed to read source code");
+	}
+	fclose(file);
+	
+	*len=length;
+	source_code[length]='\0';
+	return source_code;
+}
