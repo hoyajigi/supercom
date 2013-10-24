@@ -1,0 +1,6 @@
+Number of platforms: 1
+Device: Tahiti
+Kernel time : 0.015685 sec
+OCL bitonic sort time : 0.88947
+Sequential quick sort time : 0.13203
+Verification SUCCESS

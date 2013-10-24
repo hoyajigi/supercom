@@ -1,0 +1,13 @@
+========== Enqueue Information ==========
+Job Name: a_program
+Mode: Single node
+Number of Nodes: 1
+Device Type: CPU & GPU
+Base Directory: current directory
+Timeout: 36000 seconds
+Task: /home/sc56/lecture/day26/ex1_rotation/rotation
+Command: thorq --add --mode single --device gpu --base-dir here --timeout 36000 --name a_program ./rotation
+Path: /home/sc56/lecture/day26/ex1_rotation
+=========================================
+
+Task 38787 is enqueued

@@ -1,0 +1,13 @@
+========== Enqueue Information ==========
+Job Name: bitonic
+Mode: Single node
+Number of Nodes: 1
+Device Type: CPU & GPU
+Base Directory: current directory
+Timeout: 36000 seconds
+Task: /home/sc56/lecture/share/day34/bitonic/bitonic
+Command: thorq --add --mode single --device gpu --base-dir here --timeout 36000 --name bitonic bitonic
+Path: /home/sc56/lecture/share/day34/bitonic
+=========================================
+
+Task 42604 is enqueued

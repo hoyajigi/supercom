@@ -1,0 +1,13 @@
+========== Enqueue Information ==========
+Job Name: a_program
+Mode: Single node
+Number of Nodes: 1
+Device Type: CPU & GPU
+Base Directory: current directory
+Timeout: 36000 seconds
+Task: /home/sc56/lecture/opencl_info/opencl_info_by_instructor
+Command: thorq --add --mode single --device gpu --base-dir here --timeout 36000 --name a_program ./opencl_info_by_instructor
+Path: /home/sc56/lecture/opencl_info
+=========================================
+
+Task 38422 is enqueued
